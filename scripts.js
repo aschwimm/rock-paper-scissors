@@ -14,32 +14,41 @@ function getComputerChoice() {
 function playGame(playerSelection, computerSelection) {    
     if (playerSelection === "rock") {
         if(computerSelection === "paper") {
-            console.log(`You picked ${playerSelection}. Computer picked ${computerSelection}. You lose.`)
+            alert(`You picked ${playerSelection}. Computer picked ${computerSelection}. You lose.`)
+            return "lose";
         }
         else if (computerSelection === "scissors") {
-            console.log(`You picked ${playerSelection}. Computer picked ${computerSelection}. You win.`)
+            alert(`You picked ${playerSelection}. Computer picked ${computerSelection}. You win.`)
+            return "win";
         } else {
-            console.log(`You picked ${playerSelection}. Computer picked ${computerSelection}. Tie.`)
+            alert(`You picked ${playerSelection}. Computer picked ${computerSelection}. Tie.`)
+            return "tie";
         }
     }
     if (playerSelection === "paper") {
         if(computerSelection === "scissors") {
-            console.log(`You picked ${playerSelection}. Computer picked ${computerSelection}. You lose.`)
+            alert(`You picked ${playerSelection}. Computer picked ${computerSelection}. You lose.`)
+            return "lose";
         }
         else if (computerSelection === "rock") {
-            console.log(`You picked ${playerSelection}. Computer picked ${computerSelection}. You win.`)
+            alert(`You picked ${playerSelection}. Computer picked ${computerSelection}. You win.`)
+            return "win";
         } else {
-            console.log(`You picked ${playerSelection}. Computer picked ${computerSelection}. Tie.`)
+            alert(`You picked ${playerSelection}. Computer picked ${computerSelection}. Tie.`)
+            return "tie";
         }
     }
     if (playerSelection === "scissors") {
         if(computerSelection === "rock") {
-            console.log(`You picked ${playerSelection}. Computer picked ${computerSelection}. You lose.`)
+            alert(`You picked ${playerSelection}. Computer picked ${computerSelection}. You lose.`)
+            return "lose";
         }
         else if (computerSelection === "paper") {
-            console.log(`You picked ${playerSelection}. Computer picked ${computerSelection}. You win.`)
+            alert(`You picked ${playerSelection}. Computer picked ${computerSelection}. You win.`)
+            return "win";
         } else {
-            console.log(`You picked ${playerSelection}. Computer picked ${computerSelection}. Tie.`)
+            alert(`You picked ${playerSelection}. Computer picked ${computerSelection}. Tie.`)
+            return "tie";
         }
     }
 }
@@ -48,6 +57,34 @@ function playerInput() {
     while(playerChoice !== "rock" && playerChoice !== "paper" && playerChoice !== "scissors") {
         playerChoice = prompt("Enter 'rock' 'paper' or 'scissors' to play a game").toLowerCase();
     }
-    const computerChoice = getComputerChoice();
-    playGame(playerChoice, computerChoice);
+    return playerChoice;
+}
+
+function playSeries(rounds = 1) {
+    if(typeof(rounds) !== "integer") {
+        alert("Enter valid number of rounds. Minimum is 1 maximum is 10");
+        return
+    }
+
+    if(!parseInt(rounds)) {
+        alert("Enter valid number of rounds. Minimum is 1 maximum is 10");
+        return
+    }
+    if(rounds < 1 || rounds > 10 || rounds % 1 !== 0) {
+        alert("Enter valid number of rounds. Minimum is 1 maximum is 10");
+        return
+    }
+    let scoreboard = { 'player': 0, 'computer': 0, 'ties': 0}
+    for (let i = 0; i < rounds; i++) {
+        let result = playGame(playerInput(), getComputerChoice());
+        if(result === "win") {
+            scoreboard.player += 1;
+        }
+        else if(result === "lose") {
+            scoreboard.computer += 1;
+        } else {
+            scoreboard.ties += 1;
+        }
+    }
+    console.log(scoreboard);
 }
