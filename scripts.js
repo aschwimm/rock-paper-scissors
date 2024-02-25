@@ -1,3 +1,40 @@
+const choices = document.querySelectorAll(".choices");
+let scoreboard = { 'player': 0, 'computer': 0, 'ties': 0}
+let displayedScoreboard = document.querySelector("#scoreboard");
+let gamesPlayed = 0;
+let gameResult = document.querySelector("#game-result");
+choices.forEach((choice) => {
+    choice.addEventListener("click", () => {
+        let computerChoice = getComputerChoice();
+        let playerChoice = choice.className.replace("choices ", "");
+        let result = playGame(playerChoice, computerChoice);
+        if(result === "win") {
+            scoreboard.player++;
+        }
+        else if(result === "lose") {
+            scoreboard.computer++;
+        } else {
+            scoreboard.ties++;
+        }
+        displayedScoreboard.textContent = `Player: ${scoreboard.player} Computer: ${scoreboard.computer} Ties: ${scoreboard.ties}`;
+        gamesPlayed += 1;
+        if(gamesPlayed === 5) {
+            if(scoreboard.player > scoreboard.computer) {
+                gameResult.textContent = "Player Wins!";
+            }
+            else if(scoreboard.player < scoreboard.computer) {
+                gameResult.textContent = "Computer Wins!";
+            } else {
+                gameResult.textContent = "Tie Score!";
+            }
+        }
+    })
+})
+
+
+
+// getComputerChoice() is a function that generates a random number between 1 and 3
+// THEN assigns a string representing one of the 3 choices in rock/paper/scissors to the choice variable
 function getComputerChoice() {
     let choice = Math.floor((Math.random() * 3) + 1);
     if(choice === 1) {
@@ -11,6 +48,8 @@ function getComputerChoice() {
     return choice;
 }
 
+// playgame() is a function that compares the player's selection against the computer's randomized selection
+// THEN returns the result as a string
 function playGame(playerSelection, computerSelection) {    
     if (playerSelection === "rock") {
         if(computerSelection === "paper") {
@@ -59,32 +98,20 @@ function playerInput() {
     }
     return playerChoice;
 }
+// playSeries function is currently unused, commented out to implement later
 
-function playSeries(rounds = 1) {
-    if(typeof(rounds) !== "integer") {
-        alert("Enter valid number of rounds. Minimum is 1 maximum is 10");
-        return
-    }
-
-    if(!parseInt(rounds)) {
-        alert("Enter valid number of rounds. Minimum is 1 maximum is 10");
-        return
-    }
-    if(rounds < 1 || rounds > 10 || rounds % 1 !== 0) {
-        alert("Enter valid number of rounds. Minimum is 1 maximum is 10");
-        return
-    }
-    let scoreboard = { 'player': 0, 'computer': 0, 'ties': 0}
-    for (let i = 0; i < rounds; i++) {
-        let result = playGame(playerInput(), getComputerChoice());
-        if(result === "win") {
-            scoreboard.player += 1;
-        }
-        else if(result === "lose") {
-            scoreboard.computer += 1;
-        } else {
-            scoreboard.ties += 1;
-        }
-    }
-    console.log(scoreboard);
-}
+//function playSeries(rounds = 1) {
+//    let scoreboard = { 'player': 0, 'computer': 0, 'ties': 0}
+//    for (let i = 0; i < rounds; i++) {
+//        let result = playGame(playerInput(), getComputerChoice());
+//        if(result === "win") {
+//            scoreboard.player += 1;
+//        }
+//        else if(result === "lose") {
+//            scoreboard.computer += 1;
+//        } else {
+//            scoreboard.ties += 1;
+//        }
+//    }
+//    console.log(scoreboard);
+//}
